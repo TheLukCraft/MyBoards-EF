@@ -27,7 +27,12 @@ public class MyBoardsContext(DbContextOptions<MyBoardsContext> options) : DbCont
         {
             eb.Property(x => x.CreatedDate).HasDefaultValueSql("getutcdate()");
             eb.Property(x => x.UpdatedDate).ValueGeneratedOnUpdate();
-        })
+        });
+
+        modelBuilder.Entity<User>()
+            .HasOne(u => u.Address)
+            .WithOne(a => a.User)
+            .HasForeignKey<Address>(a => a.UserId);
     }
 
 }
